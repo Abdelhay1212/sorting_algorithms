@@ -22,7 +22,7 @@ void swap(int *xp, int *yp)
  * @u_idx: the end point
  * Return: the pivot
  */
-int partition(int *array, size_t l_idx, size_t u_idx)
+int partition(int *array, size_t l_idx, size_t u_idx, size_t size)
 {
     int pivot;
     size_t start, end;
@@ -39,10 +39,14 @@ int partition(int *array, size_t l_idx, size_t u_idx)
             end--;
 
         if (start < end)
+        {
             swap(&array[start], &array[end]);
+            print_array(array, size);
+        }
     }
 
     swap(&array[l_idx], &array[end]);
+    print_array(array, size);
     return end;
 }
 
@@ -53,15 +57,15 @@ int partition(int *array, size_t l_idx, size_t u_idx)
  * @u_idx: the end point
  * Return: void
  */
-void quickSort(int *array, size_t l_idx, size_t u_idx)
+void quickSort(int *array, size_t l_idx, size_t u_idx, size_t size)
 {
     size_t loc;
 
     if (l_idx < u_idx)
     {
-        loc = partition(array, l_idx, u_idx);
-        quickSort(array, l_idx, loc - 1);
-        quickSort(array, loc + 1, u_idx);
+        loc = partition(array, l_idx, u_idx, size);
+        quickSort(array, l_idx, loc - 1, size);
+        quickSort(array, loc + 1, u_idx, size);
     }
 }
 
@@ -75,5 +79,5 @@ void quick_sort(int *array, size_t size)
 {
     if (array == NULL || size < 2)
         return;
-    quickSort(array, 0, size - 1);
+    quickSort(array, 0, size - 1, size);
 }
